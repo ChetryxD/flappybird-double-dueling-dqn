@@ -1,68 +1,74 @@
-## 🎮 Demo
-![flappybirds](https://github.com/user-attachments/assets/66528b50-d6ea-4e2f-a4d0-ac5f4d110708)
-
-
-
-
 # 🐦 Flappy Bird AI — Double Dueling DQN (PyTorch)
 
-A from-scratch implementation of a **Double Dueling Deep Q-Network (DQN)** agent that masters Flappy Bird using value-based reinforcement learning.
+> A from-scratch implementation of a **Double Dueling Deep Q-Network (DQN)** trained to master Flappy Bird using value-based reinforcement learning.
+
+![PyTorch](https://img.shields.io/badge/PyTorch-2.x-red)
+![Python](https://img.shields.io/badge/Python-3.9%2B-blue)
+![License](https://img.shields.io/badge/License-MIT-lightgrey)
+![RL](https://img.shields.io/badge/Reinforcement-Learning-green)
+
+---
+
+## 🎮 Demo
+
+![flappybirds](https://github.com/user-attachments/assets/658bd3f9-401e-4e47-a63d-d14c9ca817a5)
+
 
 ---
 
 ## 📌 Overview
 
-This project implements a **Double Dueling Deep Q-Network** trained to solve Flappy Bird in a sparse-reward environment.
+This project implements a **Double Dueling Deep Q-Network (DQN)** to solve Flappy Bird in a sparse-reward environment.
 
-The agent achieves stable, long-horizon control by combining:
+To achieve stable long-horizon learning, the agent integrates:
 
-- Experience Replay  
-- Target Network Synchronization  
-- Double DQN (overestimation mitigation)  
-- Dueling Network Architecture  
-- Huber Loss stabilization  
+- **Experience Replay**
+- **Target Network Synchronization**
+- **Double DQN** (reduces Q-value overestimation)
+- **Dueling Architecture** (separates state-value and advantage streams)
+- **Huber Loss (SmoothL1Loss)** for stable updates
 
-The result is consistent high-performance gameplay with strong generalization beyond early training episodes.
+The result is a stable agent capable of consistently passing dozens of pipes.
 
 ---
 
 ## 🚀 Performance
 
 | Metric | Value |
-|--------|-------|
-| Peak Score | 80+ pipes |
-| Consistent Average | 20–50 pipes |
+|--------|--------|
+| Peak Score | **80–120+ pipes** |
+| Consistent Average | **40–70 pipes** |
 | Convergence | ~300k episodes |
-| Training Time | ~4–6 hours (CPU) |
+| Training Time | ~3–4 hours (CPU) |
 
 ✅ Stable learning curve  
 ✅ Reduced Q-value oscillations  
-✅ Generalization beyond memorized sequences  
+✅ Strong generalization beyond early episodes  
+
+---
+
+## 📈 Training Curve
+
+<img width="788" height="587" alt="image" src="https://github.com/user-attachments/assets/f4a73851-ca98-4ed6-a24f-1e831927a083" />
 
 ---
 
 ## 🧠 Algorithmic Architecture
 
-| Technique | Why It Matters |
-|------------|----------------|
-| Experience Replay | Breaks temporal correlation |
-| Target Network | Stabilizes bootstrapped updates |
-| Double DQN | Reduces Q-value overestimation bias |
-| Dueling Architecture | Separates state value from action advantage |
-| SmoothL1Loss (Huber) | Prevents gradient explosions |
+| Technique | Purpose |
+|------------|----------|
+| Experience Replay | Breaks temporal correlation between samples |
+| Target Network | Stabilizes Q-learning updates |
+| Double DQN | Mitigates overestimation bias |
+| Dueling DQN | Separates state-value from action advantage |
+| Huber Loss | Prevents gradient instability |
 
----
+### Dueling Decomposition
 
-## Dueling Network Structure
-
-Q(s, a) is decomposed as:
+The Q-value is computed as:
 
 ```python
-Q(s, a) = V(s) + (A(s, a) - mean(A(s, ·)))\
-
-📈 Training Curve
-<img width="788" height="587" alt="image" src="https://github.com/user-attachments/assets/4962cf31-4cf1-40cd-97b0-5aca20594e53" />
-
+Q(s, a) = V(s) + (A(s, a) - mean(A(s, ·)))
 📂 Project Structure
 
 dqn_pytorch/
