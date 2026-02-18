@@ -1,21 +1,8 @@
 {
-    "version": "0.2.0",
-    "configurations": [
-        {
-            "name": "Train FlappyBird",
-            "type": "debugpy",
-            "request": "launch",
-            "program": "agent.py",
-            "console": "integratedTerminal",
-            "args": ["flappybird1", "--train"]
-        },
-        {
-            "name": "Run FlappyBird (Inference)",
-            "type": "debugpy",
-            "request": "launch",
-            "program": "agent.py",
-            "console": "integratedTerminal",
-            "args": ["flappybird1"]
-        }
-    ]
+    "name": "Train FlappyBird",
+    "type": "debugpy",
+    "request": "launch",
+    "module": "src.agent",
+    "console": "integratedTerminal",
+    "args": ["--train"]
 }
