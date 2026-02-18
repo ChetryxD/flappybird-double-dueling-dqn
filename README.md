@@ -1,3 +1,9 @@
+## 🎮 Demo
+![flappybirds](https://github.com/user-attachments/assets/66528b50-d6ea-4e2f-a4d0-ac5f4d110708)
+
+
+
+
 # 🐦 Flappy Bird AI — Double Dueling DQN (PyTorch)
 
 A from-scratch implementation of a **Double Dueling Deep Q-Network (DQN)** agent that masters Flappy Bird using value-based reinforcement learning.
