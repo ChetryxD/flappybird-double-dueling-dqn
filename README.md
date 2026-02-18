@@ -1,191 +1,140 @@
-🐦 Flappy Bird AI — Double Dueling DQN (PyTorch)
+# 🐦 Flappy Bird AI — Double Dueling DQN (PyTorch)
 
-A from-scratch implementation of a Double Dueling Deep Q-Network (DQN) agent trained to master Flappy Bird using value-based reinforcement learning.
-The agent learns stable control policies through:
-Experience Replay
+A from-scratch implementation of a **Double Dueling Deep Q-Network (DQN)** agent that masters Flappy Bird using value-based reinforcement learning.
 
-Target Network Synchronization
+---
 
-Double DQN (overestimation reduction)
+## 📌 Overview
 
-Dueling Architecture (separate value & advantage streams)
+This project implements a **Double Dueling Deep Q-Network** trained to solve Flappy Bird in a sparse-reward environment.
 
-Huber Loss stabilization
+The agent achieves stable, long-horizon control by combining:
 
+- Experience Replay  
+- Target Network Synchronization  
+- Double DQN (overestimation mitigation)  
+- Dueling Network Architecture  
+- Huber Loss stabilization  
 
-After training, the agent consistently achieves:
+The result is consistent high-performance gameplay with strong generalization beyond early training episodes.
 
-✅ 50+ pipes passed
+---
 
-📈 Stable learning curve
+## 🚀 Performance
 
-🎯 Strong generalization beyond early episodes
+| Metric | Value |
+|--------|-------|
+| Peak Score | 80+ pipes |
+| Consistent Average | 20–50 pipes |
+| Convergence | ~300k episodes |
+| Training Time | ~4–6 hours (CPU) |
 
-🚀 Project Highlights
+✅ Stable learning curve  
+✅ Reduced Q-value oscillations  
+✅ Generalization beyond memorized sequences  
 
-Built modular RL training pipeline in PyTorch
+---
 
-Implemented Double DQN to reduce Q-value overestimation
+## 🧠 Algorithmic Architecture
 
-Implemented Dueling Network Architecture for better state-value learning
+| Technique | Why It Matters |
+|------------|----------------|
+| Experience Replay | Breaks temporal correlation |
+| Target Network | Stabilizes bootstrapped updates |
+| Double DQN | Reduces Q-value overestimation bias |
+| Dueling Architecture | Separates state value from action advantage |
+| SmoothL1Loss (Huber) | Prevents gradient explosions |
 
-Tuned hyperparameters for stable long-duration training
+---
 
-Achieved strong performance in sparse reward environment
+## Dueling Network Structure
 
+Q(s, a) is decomposed as:
 
-🧠 Architecture:
-| Technique            | Purpose                                    |
-| -------------------- | ------------------------------------------ |
-| Experience Replay    | Breaks correlation between samples         |
-| Target Network       | Stabilizes Q-learning updates              |
-| Double DQN           | Reduces Q-value overestimation             |
-| Dueling DQN          | Separates state value and action advantage |
-| SmoothL1Loss (Huber) | Stabilizes training                        |
+```python
+Q(s, a) = V(s) + (A(s, a) - mean(A(s, ·)))\
 
+📈 Training Curve
+<img width="788" height="587" alt="image" src="https://github.com/user-attachments/assets/4962cf31-4cf1-40cd-97b0-5aca20594e53" />
 
-📊 Results
-Training duration: ~3–4 hours
-Convergence after ~300k episodes
-Peak score: 120+ pipes
-Consistent average: 40–70 pipes
-
-Training curve example:
-runs/flappybird1.png
-
-📂 Project Structure:
+📂 Project Structure
 
 dqn_pytorch/
+│
+├── src/
+│   ├── agent.py
+│   ├── dqn.py
+│   └── experience_replay.py
+│
+├── configs/
+│   └── hyperparameters.yml
+│
+├── assets/
+│   ├── learning_curve.png
+│   └── flappybird_demo.gif
+│
+├── runs/               # training outputs (gitignored)
+│
+├── requirements.txt
+└── README.md
 
-src/
-    agent.py
-   
-    dqn.py
-    
-    experience_replay.py
-
-configs/
-    
-    hyperparameters.yml
-
-assets/
-   
-    learning_curve.png
-    
-    flappybird_demo.gif
-
-runs/               (training outputs - ignored in git)
-
-requirements.txt
-
-README.md
-
-⚙️ Installation:
-
-Clone the repository:
+⚙️ Installation
 
 git clone https://github.com/ChetryxD/flappybird-double-dueling-dqn.git
-
 cd flappybird-double-dueling-dqn
 
-
-Create virtual environment (recommended):
-
 python -m venv venv
-
-venv\Scripts\activate   # Windows
-
-
-Install dependencies:
+venv\Scripts\activate
 
 pip install -r requirements.txt
 
-
 🏋️ Training
-
-Run training:
 
 python -m src.agent --train
 
-Training logs and model will be saved in:
-
-runs/
-
-
-Saved artifacts:
-
-flappybird1.pt → trained model
-
-flappybird1.log → training log
-
-flappybird1.png → learning curve
-
-
 🎮 Run Trained Agent
-
-After training:
 
 python -m src.agent
 
+🧪 Hyperparameters
+learning_rate: 0.00015
+gamma: 0.99
+replay_memory_size: 100000
+batch_size: 64
+epsilon_decay: 0.999995
+double_dqn: true
+dueling_dqn: true
 
-🧪 Hyperparameters Used
+🛠 Engineering Decisions
 
-Located in:
-
-configs/hyperparameters.yml
-
-
-
-Key configuration:
-
-Learning rate: 0.00015
-
-Discount factor: 0.99
-
-Replay memory: 100,000
-
-Batch size: 64
-
-Epsilon decay: 0.999995
-
-Double DQN: Enabled
-
-Dueling DQN: Enabled
-
-
-
-🛠 Key Engineering Decisions
-
-Forced CPU execution (more stable for small network workloads)
+Forced CPU execution (stable for small networks)
 
 Reduced network size to prevent overfitting
 
-Increased target sync interval for smoother updates
+Increased target sync interval
 
-Lowered learning rate for long-term stability
+Lowered learning rate for smoother convergence
 
-Switched from MSE to Huber loss
+Switched from MSE to Huber Loss
 
+📚 Key Learnings
 
+Stabilization techniques matter more than network depth
 
-📈 What I Learned
+Double DQN reduces oscillatory Q-values
 
-Stabilization techniques matter more than raw architecture size
+Dueling improves sparse reward learning
 
-Hyperparameter tuning significantly impacts convergence
+Hyperparameter tuning dominates performance
 
-Dueling architecture improves value estimation in sparse reward settings
-
-Double DQN reduces unstable oscillations
-
-
-
-📌 Future Improvements
+🔮 Future Improvements
 
 Prioritized Experience Replay
 
-Noisy Networks for exploration
+Noisy Networks
 
 Multi-step returns
 
-Policy gradient comparison (PPO baseline)
+PPO baseline comparison
+
+Model checkpoint evaluation pipeline
